@@ -261,7 +261,7 @@ elif option == "Analysis":
         "Airport Taxi Times",
         "Top Routes by Frequency",
         "Top Routes with Delays",
-        "Correlation Analysis",
+        "Correlation of Delays",
     ]
     selected_option = st.selectbox("Select Analysis", options)
 
