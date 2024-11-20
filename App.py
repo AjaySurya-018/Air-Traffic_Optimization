@@ -470,15 +470,15 @@ elif option == "Analysis":
                    AVG((ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
                        (ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier))) 
                        AS var_arrival_delay,
-                   SQRT(AVG((ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
-                            (ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)))) 
+                   POWER(AVG((ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
+                             (ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier))), 0.5) 
                        AS std_arrival_delay,
                    -- Variance and Standard Deviation for Departure Delay
                    AVG((DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
                        (DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier))) 
                        AS var_departure_delay,
-                   SQRT(AVG((DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
-                            (DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)))) 
+                   POWER(AVG((DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
+                             (DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier))), 0.5) 
                        AS std_departure_delay
             FROM flights
             GROUP BY UniqueCarrier;
