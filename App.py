@@ -107,7 +107,7 @@ elif option == "Optimization":
     max_gates = st.number_input("Number of Available Gates", min_value=1, max_value=10, value=5)
 
     # Filter data based on user input
-    filtered_data = df[(df['Origin'] == source_airport) & (df['Dest'] == dest_airport)]
+    filtered_data = df[(df['Origin'] == source_airport) & (df['Dest'] == dest_airport)][['UniqueCarrier','FlightNum', 'TaxiIn', 'TaxiOut']]
 
     # Show filtered data
     st.subheader("Filtered Data")
