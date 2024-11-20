@@ -3,3 +3,5 @@ pandas
 matplotlib
 pulp
 seaborn
+scipy
+scikit-learn
