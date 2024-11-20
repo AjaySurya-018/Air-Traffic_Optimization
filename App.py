@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import pulp
 import os
 import seaborn as sns
-import scipy.stats as stats
 from sklearn.cluster import KMeans
 
 # Function to fetch distinct origin and destination airport codes
