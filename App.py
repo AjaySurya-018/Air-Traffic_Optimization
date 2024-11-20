@@ -274,8 +274,8 @@ elif option == "Analysis":
         "The variations in taxi times across airports could be attributed to factors like airport layout, air traffic congestion, ground handling efficiency, and airline operational practices. Identifying and addressing the root causes of these variations can help improve airport efficiency and reduce passenger wait times.",
         "The high frequency of flights on these routes indicates strong demand between these city pairs. This could be due to factors like business travel, tourism, or geographic proximity. Airlines might consider increasing capacity on these routes to meet the high demand.",
         "These routes are experiencing significant delays, which could be due to various factors such as weather conditions, air traffic congestion, or operational issues at specific airports. Identifying the root causes of these delays and implementing targeted solutions can help improve the reliability of these routes.",
-        "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map."
-        "This list contains best day of the week to travel to minimize delays in ascending order."
+        "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map.",
+        "Saturday is the best day of the week to travel to minimize delays."
     ]
 
     # Streamlit app
