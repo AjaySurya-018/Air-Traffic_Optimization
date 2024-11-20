@@ -463,11 +463,13 @@ elif option == "Analysis":
         def plot_variance_analysis():
             # Variance and Standard Deviation of delays grouped by UniqueCarrier
             query_carrier = """
-            SELECT UniqueCarrier, 
-                   VAR_POP(ArrDelay) AS var_arrival_delay, 
-                   STDDEV_POP(ArrDelay) AS std_arrival_delay,
-                   VAR_POP(DepDelay) AS var_departure_delay, 
-                   STDDEV_POP(DepDelay) AS std_departure_delay
+            SELECT UniqueCarrier,
+                   AVG(ArrDelay) AS avg_arrival_delay,
+                   AVG((ArrDelay - AVG(ArrDelay)) * (ArrDelay - AVG(ArrDelay))) AS var_arrival_delay,
+                   SQRT(AVG((ArrDelay - AVG(ArrDelay)) * (ArrDelay - AVG(ArrDelay)))) AS std_arrival_delay,
+                   AVG(DepDelay) AS avg_departure_delay,
+                   AVG((DepDelay - AVG(DepDelay)) * (DepDelay - AVG(DepDelay))) AS var_departure_delay,
+                   SQRT(AVG((DepDelay - AVG(DepDelay)) * (DepDelay - AVG(DepDelay)))) AS std_departure_delay
             FROM flights
             GROUP BY UniqueCarrier
             """
