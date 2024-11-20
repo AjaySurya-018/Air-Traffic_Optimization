@@ -260,6 +260,7 @@ elif option == "Analysis":
         "Airport Taxi Times",
         "Top Routes by Frequency",
         "Top Routes with Delays",
+        "Correlation Analysis",
     ]
     selected_option = st.selectbox("Select Analysis", options)
 
@@ -434,3 +435,23 @@ elif option == "Analysis":
             st.pyplot(fig)
 
         display_analysis(plot_top_routes_with_delays, 9)
+
+        elif selected_option == "Correlation Analysis":
+        def plot_correlation_analysis():
+            query = """
+            SELECT Distance, ArrDelay, DepDelay, TaxiIn, TaxiOut
+            FROM flights
+            """
+            # Fetch the data
+            correlation_data = pd.read_sql_query(query, conn)
+
+            # Compute correlation matrix
+            correlation_matrix = correlation_data.corr()
+
+            # Visualization
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", ax=ax)
+            ax.set_title("Correlation Matrix of Flight Variables")
+            st.pyplot(fig)
+
+        display_analysis(plot_correlation_analysis, 1)
