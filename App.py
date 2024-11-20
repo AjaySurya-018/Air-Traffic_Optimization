@@ -295,7 +295,6 @@ elif option == "Analysis":
         "Top Routes with Delays",
         "Correlation of Delays",
         "Best Day of the Week",
-        "Variance Decomposition"
     ]
     selected_option = st.selectbox("Select Analysis", options)
 
@@ -493,36 +492,6 @@ elif option == "Analysis":
 
     elif selected_option == "Best Day of the Week":
         display_analysis(analyze_best_day_to_minimize_delays,11)
-
-    elif selected_option == "Variance Decomposition":
-        def plot_variance_decomposition_analysis():
-            query = """
-            SELECT UniqueCarrier, Origin, Dest, ArrDelay, DepDelay, DayOfWeek
-            FROM flights
-            WHERE ArrDelay IS NOT NULL AND DepDelay IS NOT NULL
-            """
-            df = pd.read_sql_query(query, conn)
-        
-            # Perform ANOVA to see the effect of UniqueCarrier, Origin, and DayOfWeek on ArrDelay
-            anova_results = {}
-            factors = ['UniqueCarrier', 'Origin', 'DayOfWeek']
-            for factor in factors:
-                f_stat, p_val = stats.f_oneway(*(df[df[factor] == level]['ArrDelay'] for level in df[factor].unique()))
-                anova_results[factor] = (f_stat, p_val)
-        
-            # Display the results
-            st.write("ANOVA Results for Variance Decomposition (ArrDelay):")
-            for factor, (f_stat, p_val) in anova_results.items():
-                st.write(f"{factor} - F-statistic: {f_stat:.2f}, p-value: {p_val:.4f}")
-                
-            # Visualize the distribution of delays by factor
-            fig, ax = plt.subplots(figsize=(12, 6))
-            sns.boxplot(data=df, x="DayOfWeek", y="ArrDelay", ax=ax)
-            ax.set_title("Distribution of Arrival Delays by Day of Week")
-            st.pyplot(fig)
-        
-        # Display the analysis
-        display_analysis(plot_variance_decomposition_analysis, 1)
 
 
         
