@@ -455,4 +455,4 @@ elif option == "Analysis":
             ax.set_title("Correlation Matrix of Flight Variables")
             st.pyplot(fig)
 
-        display_analysis(plot_correlation_analysis, 1)
+        display_analysis(plot_correlation_analysis, 10)
