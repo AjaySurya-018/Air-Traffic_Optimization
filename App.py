@@ -465,13 +465,23 @@ elif option == "Analysis":
             query_carrier = """
             SELECT UniqueCarrier,
                    AVG(ArrDelay) AS avg_arrival_delay,
-                   AVG((ArrDelay - AVG(ArrDelay)) * (ArrDelay - AVG(ArrDelay))) AS var_arrival_delay,
-                   SQRT(AVG((ArrDelay - AVG(ArrDelay)) * (ArrDelay - AVG(ArrDelay)))) AS std_arrival_delay,
                    AVG(DepDelay) AS avg_departure_delay,
-                   AVG((DepDelay - AVG(DepDelay)) * (DepDelay - AVG(DepDelay))) AS var_departure_delay,
-                   SQRT(AVG((DepDelay - AVG(DepDelay)) * (DepDelay - AVG(DepDelay)))) AS std_departure_delay
+                   -- Variance and Standard Deviation for Arrival Delay
+                   AVG((ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
+                       (ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier))) 
+                       AS var_arrival_delay,
+                   SQRT(AVG((ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
+                            (ArrDelay - (SELECT AVG(ArrDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)))) 
+                       AS std_arrival_delay,
+                   -- Variance and Standard Deviation for Departure Delay
+                   AVG((DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
+                       (DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier))) 
+                       AS var_departure_delay,
+                   SQRT(AVG((DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)) * 
+                            (DepDelay - (SELECT AVG(DepDelay) FROM flights AS f WHERE f.UniqueCarrier = flights.UniqueCarrier)))) 
+                       AS std_departure_delay
             FROM flights
-            GROUP BY UniqueCarrier
+            GROUP BY UniqueCarrier;
             """
             carrier_result = pd.read_sql_query(query_carrier, conn)
 
