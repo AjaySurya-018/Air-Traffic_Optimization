@@ -76,7 +76,7 @@ attribute_descriptions = {
 }
 
 # Main Interface
-st.title("Flight Analysis and Optimization Dashboard")
+st.title("Airline Traffic Analysis and Optimization Dashboard")
 
 # Sidebar Option Selector
 st.sidebar.title("Navigation")
