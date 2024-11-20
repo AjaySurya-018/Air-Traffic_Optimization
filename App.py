@@ -519,7 +519,7 @@ elif option == "Analysis":
                 
             # Visualize the distribution of delays by factor
             fig, ax = plt.subplots(figsize=(12, 6))
-            sns.boxplot(data=df, x="DayOfWeek", y="ArrDelay", ax=ax)
+            sns.boxplot(data=df, x="UniqueCarrier", y="ArrDelay", ax=ax)
             ax.set_title("Distribution of Arrival Delays by Day of Week")
             st.pyplot(fig)
         
