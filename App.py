@@ -490,7 +490,7 @@ elif option == "Analysis":
         display_analysis(plot_correlation_analysis, 10)
 
     elif selected_option == "Best Day of the Week":
-    display_analysis(analyze_best_day_to_minimize_delays,11)
+        display_analysis(analyze_best_day_to_minimize_delays,11)
 
 
         
