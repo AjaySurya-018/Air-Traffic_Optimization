@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import pulp
 import os
 import seaborn as sns
+import scipy.stats as stats
+from sklearn.cluster import KMeans
 
 # Function to fetch distinct origin and destination airport codes
 def fetch_airport_codes():
@@ -275,7 +277,8 @@ elif option == "Analysis":
         "The high frequency of flights on these routes indicates strong demand between these city pairs. This could be due to factors like business travel, tourism, or geographic proximity. Airlines might consider increasing capacity on these routes to meet the high demand.",
         "These routes are experiencing significant delays, which could be due to various factors such as weather conditions, air traffic congestion, or operational issues at specific airports. Identifying the root causes of these delays and implementing targeted solutions can help improve the reliability of these routes.",
         "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map.",
-        "Saturday is the best day of the week to travel to minimize delays."
+        "Saturday is the best day of the week to travel to minimize delays.",
+        "Cluster of all the flights based on the arrival and departure delays."
     ]
 
     # Streamlit app
@@ -294,6 +297,7 @@ elif option == "Analysis":
         "Top Routes with Delays",
         "Correlation of Delays",
         "Best Day of the Week",
+        "Delay Cluster"
     ]
     selected_option = st.selectbox("Select Analysis", options)
 
@@ -491,6 +495,32 @@ elif option == "Analysis":
 
     elif selected_option == "Best Day of the Week":
         display_analysis(analyze_best_day_to_minimize_delays,11)
+
+
+    elif selected_option == "Delay Cluster":
+        def plot_cluster_analysis():
+            query = """
+            SELECT UniqueCarrier, ArrDelay, DepDelay, Distance
+            FROM flights
+            WHERE ArrDelay IS NOT NULL AND DepDelay IS NOT NULL
+            """
+            df = pd.read_sql_query(query, conn)
+        
+            # Perform KMeans clustering
+            kmeans = KMeans(n_clusters=3, random_state=42)
+            df['Cluster'] = kmeans.fit_predict(df[['ArrDelay', 'DepDelay', 'Distance']])
+        
+            # Plot the clusters
+            fig, ax = plt.subplots()
+            sns.scatterplot(data=df, x="ArrDelay", y="DepDelay", hue="Cluster", palette="Set2", ax=ax)
+            ax.set_title("K-Means Clustering of Delays")
+            st.pyplot(fig)
+        
+        # Display the analysis
+        display_analysis(plot_cluster_analysis, 12)
+        
+
+
 
 
         
