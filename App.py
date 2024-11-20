@@ -436,7 +436,7 @@ elif option == "Analysis":
 
         display_analysis(plot_top_routes_with_delays, 9)
 
-        elif selected_option == "Correlation Analysis":
+    elif selected_option == "Correlation Analysis":
         def plot_correlation_analysis():
             query = """
             SELECT Distance, ArrDelay, DepDelay, TaxiIn, TaxiOut
