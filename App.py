@@ -244,7 +244,8 @@ elif option == "Analysis":
         "The variations in taxi times across airports could be attributed to factors like airport layout, air traffic congestion, ground handling efficiency, and airline operational practices. Identifying and addressing the root causes of these variations can help improve airport efficiency and reduce passenger wait times.",
         "The high frequency of flights on these routes indicates strong demand between these city pairs. This could be due to factors like business travel, tourism, or geographic proximity. Airlines might consider increasing capacity on these routes to meet the high demand.",
         "These routes are experiencing significant delays, which could be due to various factors such as weather conditions, air traffic congestion, or operational issues at specific airports. Identifying the root causes of these delays and implementing targeted solutions can help improve the reliability of these routes.",
-        "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map."
+        "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map.",
+        "Understand how consistent or unpredictable delays are for carriers, routes, or airports."
     ]
 
     # Streamlit app
@@ -262,6 +263,7 @@ elif option == "Analysis":
         "Top Routes by Frequency",
         "Top Routes with Delays",
         "Correlation of Delays",
+        "Variability in Delays",
     ]
     selected_option = st.selectbox("Select Analysis", options)
 
@@ -456,3 +458,28 @@ elif option == "Analysis":
             st.pyplot(fig)
 
         display_analysis(plot_correlation_analysis, 10)
+
+    elif selected_option == "Variability in Delays":
+        def plot_variance_analysis():
+            # Variance and Standard Deviation of delays grouped by UniqueCarrier
+            query_carrier = """
+            SELECT UniqueCarrier, 
+                   VAR_POP(ArrDelay) AS var_arrival_delay, 
+                   STDDEV_POP(ArrDelay) AS std_arrival_delay,
+                   VAR_POP(DepDelay) AS var_departure_delay, 
+                   STDDEV_POP(DepDelay) AS std_departure_delay
+            FROM flights
+            GROUP BY UniqueCarrier
+            """
+            carrier_result = pd.read_sql_query(query_carrier, conn)
+
+            # Visualization
+            fig, ax = plt.subplots(figsize=(10, 6))
+            sns.barplot(data=carrier_result, x="UniqueCarrier", y="std_arrival_delay", label="Arrival Delay STD", ax=ax)
+            sns.barplot(data=carrier_result, x="UniqueCarrier", y="std_departure_delay", label="Departure Delay STD", ax=ax, alpha=0.7)
+            ax.set_title("Standard Deviation of Delays by UniqueCarrier")
+            ax.legend()
+            st.pyplot(fig)
+
+        display_analysis(plot_variance_analysis, 11)
+
