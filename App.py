@@ -277,7 +277,7 @@ elif option == "Analysis":
         "These routes are experiencing significant delays, which could be due to various factors such as weather conditions, air traffic congestion, or operational issues at specific airports. Identifying the root causes of these delays and implementing targeted solutions can help improve the reliability of these routes.",
         "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map.",
         "Saturday is the best day of the week to travel to minimize delays.",
-        "Cluster of all the flights based on the arrival and departure delays."
+        "UniqueCarrier has a strong and significant effect on arrival delays."
     ]
 
     # Streamlit app
