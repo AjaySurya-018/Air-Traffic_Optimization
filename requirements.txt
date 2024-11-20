@@ -1,5 +1,4 @@
 prophet
-sqlite3
 pandas
 matplotlib
 pulp
