@@ -247,7 +247,6 @@ elif option == "Analysis":
     ]
 
     # Streamlit app
-    st.title("Flight Delay Analysis")
 
     # Dropdown menu for selecting analysis
     options = [
