@@ -43,6 +43,36 @@ def forecast_delays(route_data):
     forecast = model.predict(future)
     return forecast, model
 
+def analyze_best_day_to_minimize_delays():
+    query = """
+    SELECT 
+        DayOfWeek,
+        AVG(ArrDelay) AS avg_arrival_delay,
+        AVG(DepDelay) AS avg_departure_delay,
+        (AVG(ArrDelay) + AVG(DepDelay)) AS total_avg_delay
+    FROM flights
+    GROUP BY DayOfWeek
+    ORDER BY total_avg_delay ASC;
+    """
+    result = pd.read_sql_query(query, conn)
+    
+    # Visualization using Seaborn and Matplotlib
+    def plot_best_day():
+        fig, ax = plt.subplots(figsize=(10, 6))
+        sns.barplot(data=result, x="DayOfWeek", y="total_avg_delay", palette="viridis", ax=ax)
+        ax.set_title("Best Day of the Week to Minimize Delays")
+        ax.set_xlabel("Day of the Week")
+        ax.set_ylabel("Total Average Delay (minutes)")
+        st.pyplot(fig)
+    
+    # Display the analysis result as a table
+    st.subheader("Best Day to Minimize Delays (Table)")
+    st.dataframe(result)
+    
+    # Display visualization
+    st.subheader("Best Day to Minimize Delays (Visualization)")
+    plot_best_day()
+
 # Load the data from SQLite
 def load_data():
     conn = sqlite3.connect("flights.db")
@@ -245,6 +275,7 @@ elif option == "Analysis":
         "The high frequency of flights on these routes indicates strong demand between these city pairs. This could be due to factors like business travel, tourism, or geographic proximity. Airlines might consider increasing capacity on these routes to meet the high demand.",
         "These routes are experiencing significant delays, which could be due to various factors such as weather conditions, air traffic congestion, or operational issues at specific airports. Identifying the root causes of these delays and implementing targeted solutions can help improve the reliability of these routes.",
         "Flights which have a departure delay, are also highly likely to have an arrival delay. This is clearly shown in the correlation map."
+        "This list contains best day of the week to travel to minimize delays in ascending order."
     ]
 
     # Streamlit app
@@ -262,6 +293,7 @@ elif option == "Analysis":
         "Top Routes by Frequency",
         "Top Routes with Delays",
         "Correlation of Delays",
+        "Best Day of the Week"
     ]
     selected_option = st.selectbox("Select Analysis", options)
 
@@ -456,4 +488,12 @@ elif option == "Analysis":
             st.pyplot(fig)
 
         display_analysis(plot_correlation_analysis, 10)
+
+    elif selected_option == "Best Day of the Week":
+    display_analysis(analyze_best_day_to_minimize_delays,11)
+
+
+        
+
+
 
