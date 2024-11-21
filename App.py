@@ -266,7 +266,7 @@ elif option == "Analysis":
     # Inferences corresponding to each analysis
     inferences = [
         "Carriers with higher arrival delays tend to have higher departure delays as well. This suggests operational inefficiencies or external factors that impact both arrival and departure times.",
-        "Delays are highest on Sundays and lowest on Tuesdays. Arrival delays are consistently higher than departure delays on all days.",
+        "Delays are highest on Sundays and lowest on Saturdays. Arrival delays are consistently higher than departure delays on all days.",
         "Longer flight times for HA and CO could be due to factors like operating longer-haul routes or having a fleet with lower average cruising speeds.",
         "The increasing trend in arrival delays suggests potential systemic issues in airport operations or air traffic control that need to be addressed to improve overall flight punctuality.",
         "Improving aircraft turnaround times and addressing issues within the air traffic control system could have a substantial impact on reducing flight delays.",
