@@ -427,6 +427,8 @@ elif option == "Analysis":
             SELECT Origin, AVG(TaxiIn + TaxiOut) AS avg_taxi_time
             FROM flights
             GROUP BY Origin
+            ORDER BY avg_taxi_time
+            LIMIT 10
             """
             result = pd.read_sql_query(query, conn)
             fig, ax = plt.subplots()
