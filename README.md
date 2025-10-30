@@ -113,35 +113,6 @@ flowchart LR
 
 ---
 
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-# Clone repository
-git clone https://github.com/AjaySurya-018/Air-Traffic_Optimization.git
-cd Air-Traffic_Optimization
-
-# Setup environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### Running Applications
-
-```bash
-# Main dashboard
-streamlit run App.py
-
-# Specific modules
-streamlit run Taxi_time_optimization.py
-streamlit run Flight_average_delay_forecasting.py
-streamlit run Route_Fuel_Optimization.py
-```
-
----
-
 ## 📈 Performance Metrics
 
 | Metric | Evaluation Method |
@@ -156,30 +127,6 @@ streamlit run Route_Fuel_Optimization.py
 |--------|----------|-----------|-------------|
 | Total Taxi Time (min) | 4,320 | 3,120 | **↓ 28%** |
 | Total Arrival Delay (min) | 9,800 | 7,500 | **↓ 23%** |
-
----
-
-## 💡 Key Insights
-
-✅ **Route-level forecasting** enables proactive schedule adjustments for seasonal patterns  
-✅ **Gate optimization** significantly reduces taxi times and associated fuel burn  
-✅ **Schedule buffering** aligns planned times with realistic operations  
-✅ **Delay decomposition** (Carrier, Weather, NAS) reveals both controllable and exogenous factors
-
----
-
-## ⚠️ Limitations & Future Work
-
-**Current Limitations**:
-- Annual aggregation loses granular patterns
-- Static optimization doesn't model temporal gate conflicts
-- Simplified routing model lacks fleet/crew constraints
-
-**Roadmap**:
-- [ ] Fine-grained forecasting (daily/weekly with weather covariates)
-- [ ] Time-window interval scheduling for dynamic gate assignment
-- [ ] Causal inference for delay attribution
-- [ ] Real-time integration with ATC systems
 
 ---
 
